@@ -12,8 +12,8 @@ application = Flask(__name__)
 application.secret_key = os.urandom(12)  # Generic key for dev purposes only
 
 # Heroku
-#from flask_heroku import Heroku
-#heroku = Heroku(application)
+from flask_heroku import Heroku
+heroku = Heroku(application)
 
 # ======== Routing =========================================================== #
 # -------- Login ------------------------------------------------------------- #
