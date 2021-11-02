@@ -8,18 +8,16 @@ import json
 import sys
 import os
 
-application = app
-
-app = Flask(__name__)
-app.secret_key = os.urandom(12)  # Generic key for dev purposes only
+application = Flask(__name__)
+application.secret_key = os.urandom(12)  # Generic key for dev purposes only
 
 # Heroku
 #from flask_heroku import Heroku
-#heroku = Heroku(app)
+#heroku = Heroku(application)
 
 # ======== Routing =========================================================== #
 # -------- Login ------------------------------------------------------------- #
-@app.route('/', methods=['GET', 'POST'])
+@application.route('/', methods=['GET', 'POST'])
 def login():
     if not session.get('logged_in'):
         form = forms.LoginForm(request.form)
@@ -38,14 +36,14 @@ def login():
     return render_template('home.html', user=user)
 
 
-@app.route("/logout")
+@application.route("/logout")
 def logout():
     session['logged_in'] = False
     return redirect(url_for('login'))
 
 
 # -------- Signup ---------------------------------------------------------- #
-@app.route('/signup', methods=['GET', 'POST'])
+@application.route('/signup', methods=['GET', 'POST'])
 def signup():
     if not session.get('logged_in'):
         form = forms.LoginForm(request.form)
@@ -66,7 +64,7 @@ def signup():
 
 
 # -------- Settings ---------------------------------------------------------- #
-@app.route('/settings', methods=['GET', 'POST'])
+@application.route('/settings', methods=['GET', 'POST'])
 def settings():
     if session.get('logged_in'):
         if request.method == 'POST':
@@ -83,4 +81,4 @@ def settings():
 
 # ======== Main ============================================================== #
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True, host="0.0.0.0")
+    application.run(debug=True, use_reloader=True, host="0.0.0.0")
